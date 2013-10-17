@@ -122,12 +122,12 @@ public abstract class ActionBarSherlock {
         if (!implementationClass.isAnnotationPresent(Implementation.class)) {
             throw new IllegalArgumentException("Class " + implementationClass.getSimpleName() + " is not annotated with @Implementation");
         } else if (IMPLEMENTATIONS.containsValue(implementationClass)) {
-            if (BuildConfig.DEBUG) Log.w(TAG, "Class " + implementationClass.getSimpleName() + " already registered");
+            if (SherlockConfig.DEBUG) Log.w(TAG, "Class " + implementationClass.getSimpleName() + " already registered");
             return;
         }
 
         Implementation impl = implementationClass.getAnnotation(Implementation.class);
-        if (BuildConfig.DEBUG) Log.i(TAG, "Registering " + implementationClass.getSimpleName() + " with qualifier " + impl);
+        if (SherlockConfig.DEBUG) Log.i(TAG, "Registering " + implementationClass.getSimpleName() + " with qualifier " + impl);
         IMPLEMENTATIONS.put(impl, implementationClass);
     }
 
@@ -223,7 +223,7 @@ public abstract class ActionBarSherlock {
             throw new IllegalStateException("No implementations match configuration.");
         }
         Class<? extends ActionBarSherlock> impl = impls.values().iterator().next();
-        if (BuildConfig.DEBUG) Log.i(TAG, "Using implementation: " + impl.getSimpleName());
+        if (SherlockConfig.DEBUG) Log.i(TAG, "Using implementation: " + impl.getSimpleName());
 
         try {
             Constructor<? extends ActionBarSherlock> ctor = impl.getConstructor(CONSTRUCTOR_ARGS);
@@ -253,7 +253,7 @@ public abstract class ActionBarSherlock {
 
 
     protected ActionBarSherlock(Activity activity, int flags) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "[<ctor>] activity: " + activity + ", flags: " + flags);
+        if (SherlockConfig.DEBUG) Log.d(TAG, "[<ctor>] activity: " + activity + ", flags: " + flags);
 
         mActivity = activity;
         mIsDelegate = (flags & FLAG_DELEGATE) != 0;
@@ -551,7 +551,7 @@ public abstract class ActionBarSherlock {
      * @return {@code true} if menu creation should proceed.
      */
     protected final boolean callbackCreateOptionsMenu(Menu menu) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "[callbackCreateOptionsMenu] menu: " + menu);
+        if (SherlockConfig.DEBUG) Log.d(TAG, "[callbackCreateOptionsMenu] menu: " + menu);
 
         boolean result = true;
         if (mActivity instanceof OnCreatePanelMenuListener) {
@@ -562,7 +562,7 @@ public abstract class ActionBarSherlock {
             result = listener.onCreateOptionsMenu(menu);
         }
 
-        if (BuildConfig.DEBUG) Log.d(TAG, "[callbackCreateOptionsMenu] returning " + result);
+        if (SherlockConfig.DEBUG) Log.d(TAG, "[callbackCreateOptionsMenu] returning " + result);
         return result;
     }
 
@@ -572,7 +572,7 @@ public abstract class ActionBarSherlock {
      * @return {@code true} if menu preparation should proceed.
      */
     protected final boolean callbackPrepareOptionsMenu(Menu menu) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "[callbackPrepareOptionsMenu] menu: " + menu);
+        if (SherlockConfig.DEBUG) Log.d(TAG, "[callbackPrepareOptionsMenu] menu: " + menu);
 
         boolean result = true;
         if (mActivity instanceof OnPreparePanelListener) {
@@ -583,7 +583,7 @@ public abstract class ActionBarSherlock {
             result = listener.onPrepareOptionsMenu(menu);
         }
 
-        if (BuildConfig.DEBUG) Log.d(TAG, "[callbackPrepareOptionsMenu] returning " + result);
+        if (SherlockConfig.DEBUG) Log.d(TAG, "[callbackPrepareOptionsMenu] returning " + result);
         return result;
     }
 
@@ -595,7 +595,7 @@ public abstract class ActionBarSherlock {
      * @return {@code true} if the item selection was handled in the callback.
      */
     protected final boolean callbackOptionsItemSelected(MenuItem item) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "[callbackOptionsItemSelected] item: " + item.getTitleCondensed());
+        if (SherlockConfig.DEBUG) Log.d(TAG, "[callbackOptionsItemSelected] item: " + item.getTitleCondensed());
 
         boolean result = false;
         if (mActivity instanceof OnMenuItemSelectedListener) {
@@ -606,7 +606,7 @@ public abstract class ActionBarSherlock {
             result = listener.onOptionsItemSelected(item);
         }
 
-        if (BuildConfig.DEBUG) Log.d(TAG, "[callbackOptionsItemSelected] returning " + result);
+        if (SherlockConfig.DEBUG) Log.d(TAG, "[callbackOptionsItemSelected] returning " + result);
         return result;
     }
 
@@ -666,7 +666,7 @@ public abstract class ActionBarSherlock {
      * @param view The desired content to display.
      */
     public void setContentView(View view) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "[setContentView] view: " + view);
+        if (SherlockConfig.DEBUG) Log.d(TAG, "[setContentView] view: " + view);
 
         setContentView(view, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
@@ -698,7 +698,7 @@ public abstract class ActionBarSherlock {
      * Change the title associated with this activity.
      */
     public void setTitle(int resId) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "[setTitle] resId: " + resId);
+        if (SherlockConfig.DEBUG) Log.d(TAG, "[setTitle] resId: " + resId);
 
         setTitle(mActivity.getString(resId));
     }
@@ -767,7 +767,7 @@ public abstract class ActionBarSherlock {
      * @return Menu inflater instance.
      */
     public MenuInflater getMenuInflater() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "[getMenuInflater]");
+        if (SherlockConfig.DEBUG) Log.d(TAG, "[getMenuInflater]");
 
         // Make sure that action views can get an appropriate theme.
         if (mMenuInflater == null) {
